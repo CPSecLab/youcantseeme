@@ -423,7 +423,7 @@
 						<div id="bibtex" style="margin-top: 1.5em;" class="collapse" align="left">
 							<pre style="white-space: pre">
 
-@inproceedings{cao2023youcan'tseeme,
+@inproceedings{cao2023youcantseeme,
   title={You Can’t See Me: Physical Removal Attacks on LiDAR-based Autonomous Vehicles Driving Frameworks},
   author={Yulong Cao and S. Hrushikesh Bhupathiraju and Pirouz Naghavi and Takeshi Sugawara and Z. Morley Mao and Sara Rampazzi},
   booktitle={32nd {USENIX} Security Symposium ({USENIX} Security 23)},
@@ -583,7 +583,7 @@
     <div class="flex-row">
         <p>
             <br>
-            Though it is more challenging to attack a moving target with a higher and less stable speed in the outdoor environment, we demonstrate that PRA achieves a similar success rate of 92.7% for removing over 90% of the target traffic cone. The point cloud traces of the experiment are available <strong><a href="https://osf.io/k6nf2/?view_only=a46b3c2b51434e49857c2cc0d4f5b587">here</a></strong> (PCAP format).
+            Though it is more challenging to attack a moving target with a higher and less stable speed in the outdoor environment, we demonstrate that PRA achieves a similar success rate of 92.7% for removing over 90% of the target traffic cone. The point cloud traces of the experiment are available <strong><a href="https://drive.google.com/drive/folders/1Ley4bibcQc7qGRh-99_keltMMCN4u_Ai">here</a></strong> (PCAP format).
         </p>
     </div>
 
@@ -607,7 +607,7 @@
         &emsp;&emsp;○ AV model: <strong><a href="https://content.lgsvlsimulator.com/vehicles/lincolnmkz2017/">Lincoln MKZ 2017</a></strong><br>
         &emsp;&emsp;○ AD vehicle starts at 55m from the obstacle ( at 1m left to the center of the road)<br>
         <br>
-        The video recordings of <strong><a href="https://osf.io/k6nf2/?view_only=b082716ccb4043b5870a6ddf29d23926">all the simulation scenarios</a></strong> are provided for additional reference. All the simulations start with the AV at 55m away from the target obstacle (namely, a pedestrian or another car). The following demo videos below show the simulations when there is no attack and when the attack starts at 30m from the obstacle positioned in the middle of the road with both 5 and 10 degrees attack angles.
+        The video recordings of <strong><a href="https://drive.google.com/drive/folders/1_PHGIi6qSFbSpJJLO5wbFir59lHX5xjt">all the simulation scenarios</a></strong> are provided for additional reference. All the simulations start with the AV at 55m away from the target obstacle (namely, a pedestrian or another car). The following demo videos below show the simulations when there is no attack and when the attack starts at 30m from the obstacle positioned in the middle of the road with both 5 and 10 degrees attack angles.
 
         <div class="col-3 text-center"><video  width="100%" height="100%" controls="controls"/>
             <source src="vid/30mPed5d.mp4" type="video/mp4"></video>
@@ -711,7 +711,7 @@
     </div>
     <div style="width: 60%; font-size: 20px;">
         <br>
-        <p>For the LiDAR Velodyne VLP-16, there are three different modes: strongest mode, dual mode, and last mode where different echoes are used for calculating the point cloud (e.g. strongest mode uses the echo with maximum intensity; last-mode uses the last returned echo while the dual-mode calculates both). We found that PRA can remove points for all three modes. Here below we show the attack's ability to completely remove target obstacles from the LiDAR perception. The PCAP files for Last Mode and Dual Mode are available as a reference here.<br>
+        <p>For the LiDAR Velodyne VLP-16, there are three different modes: strongest mode, dual mode, and last mode where different echoes are used for calculating the point cloud (e.g. strongest mode uses the echo with maximum intensity; last-mode uses the last returned echo while the dual-mode calculates both). We found that PRA can remove points for all three modes. Here below we show the attack's ability to completely remove target obstacles from the LiDAR perception. The PCAP files for Last Mode and Dual Mode are available as a reference <strong><a href="https://drive.google.com/drive/folders/1PhsFpy3APUksS0xHaommc1mo8S_x12uB">here</a></strong>.<br>
         &emsp;The figure shows the point cloud of the traffic cone obstacle removed by our removal attack (LiDAR Dual Mode enable). First, the attacker spoof the points between the real obstacle and the LiDAR. Then the injected points are moved below the MOT (Minimum Operational Threshold). When the points are spoofed with higher intensity the genuine point clouds from the obstacle are removed. 
     
         <!--                <p><i>* Work done during an internship at NVIDIA.</i></p>-->

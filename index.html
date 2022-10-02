@@ -476,7 +476,7 @@
         <p>
             <br>
             In this experiment, we evaluate the Physical Removal Attack considering the following scenario: a pedestrian walking across in front of a stopped autonomous vehicle. The spoofer deployed 8m away from the LiDAR on the side of the road aiming to remove the walking pedestrian 4m in front of the LiDAR with the attack angle of 8 degrees. The LiDAR is placed on top of a vehicle to simulate the autonomous vehicle setup. The experiment settings are more thoroughly indicated below: <br>
-            &emsp;• Captured Traces Evaluation Platform <strong><a href="https://github.com/ApolloAuto/apollo/tree/v5.0.0">Apollo Baidu 5.0</a></strong> <br>
+            &emsp;• Captured Traces Evaluation Platform <strong><a href="https://github.com/autowarefoundation">Autoware</a></strong> <br>
             &emsp;• LiDAR <strong><a href="https://velodynelidar.com/products/puck/">VLP-16</a></strong> <br>
             &emsp;• Scenario<br>
             &emsp;&emsp;○ Spoofer is located 8m away from the AD vehicle<br>
@@ -690,7 +690,7 @@
     <p>
         <br>
         Several AD systems rely on camera-LiDAR-based fusion models for object detection, object localization, and tracking. Fusion helps compensate for the limitations of individual sensors and provides additional robustness to naive black-box attacks. We demonstrate that the Physical Removal Attack is robust against three state-of-the-art camera-LiDAR fusion models:<br> 
-        &emsp;&emsp;1) <strong>Frustum-ConvNet (FC)</strong>>: This Cascaded Semantic Level Fusion model takes the region proposals from the camera image and creates frustum level feature vectors from the LiDAR points. The model spatially fuses these frustum fea- tures to estimate an oriented 3D bounding box.<br>
+        &emsp;&emsp;1) <strong>Frustum-ConvNet (FC)</strong>: This Cascaded Semantic Level Fusion model takes the region proposals from the camera image and creates frustum level feature vectors from the LiDAR points. The model spatially fuses these frustum fea- tures to estimate an oriented 3D bounding box.<br>
         &emsp;&emsp;2) <strong>AVOD</strong>: This Feature Level Fusion extracts individual feature maps from the raw camera and LiDAR data and combines them.<br>
         &emsp;&emsp;3) <strong>Autoware Integrated-Semantic Level Fusion</strong>: This model fuses the feature outputs from independent detection stacks of camera and LiDAR sensors by back-projecting the detected object from the LiDAR onto the image space. Then it evaluates if there is at least a 50% overlap between the two detections to confirm an obstacle.<br>
         &emsp;We use the detection rate as a metric to evaluate PRA on the three fusion models for each possible attack angle. Our evaluation considers two analyses. In the first analysis (DEF), the intersection-over-union (IOU) evaluation is performed on the default thresholds for each model (0.7 for cars and 0.5 for pedestrians in the case of AVOD and Frustum-ConvNet, and a 50% overlap in Autoware Integrated-Semantic Level Fusion). In the second analysis (AVE), the evaluation is performed for all the possible IOU threshold values over 3D bounding box predictions for each fusion model (0.1 - 0.9 for Frustum-ConvNet and AVOD, 10% to 90% for Autoware). The resulting detection drop rates for increasing attack angle are shown below.

@@ -332,12 +332,7 @@
     <title>You Can’t See Me: Physical Removal Attacks on LiDAR-based Autonomous Vehicles Driving Frameworks</title>
     <meta property="og:description" content="You Can’t See Me: Physical Removal Attacks on LiDAR-based Autonomous Vehicles Driving Frameworks"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
-    <!-- <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:creator" content="@ArashVahdat">
-    <meta name="twitter:title" content="Diffusion Models for Adversarial Purification">
-    <meta name="twitter:description"
-          content="We propose <i>DiffPure</i> that uses diffusion models for adversarial purification.">
-    <meta name="twitter:image" content=""> -->
+
 </head>
 
 <body>
@@ -407,12 +402,12 @@
     </div>
 
     <section id="abstract"/>
-    <h2>Abstract</h2>
+    <h2> Physical Removal Attacks Overview </h2>
     <hr>
     <div class="flex-row">
         <p>
             <br>
-            Autonomous Vehicles (AVs) increasingly use LiDAR-based object detection systems to perceive other vehicles and pedestrians on the road. While existing attacks on LiDAR-based Autonomous Driving architectures focus on lowering the confidence score of AV object detection models to induce obstacle misdetection, our research discovers how to leverage laser-based spoofing techniques to selectively remove the LiDAR point cloud data of genuine obstacles at the sensor level before being used as input to the AV perception. The ablation of this critical LiDAR information causes Autonomous Driving obstacle detectors to fail to identify and locate obstacles and, consequently, induces AVs to make dangerous automatic driving decisions. 
+            Autonomous Vehicles (AVs) use LiDAR-based object detection systems to perceive other vehicles and pedestrians on the road. Our team has discovered how to leverage laser-based spoofing techniques to selectively remove the LiDAR point cloud data of genuine obstacles at the LiDAR sensor level, before being used as input to the AV perception. The ablation of this critical LiDAR information causes autonomous vehicles to fail to identify and locate obstacles and, consequently, induces AVs to make dangerous automatic driving decisions. We call such attacks Physical Removal Attacks (PRA). 
         </p>
     </div>
 
@@ -421,7 +416,8 @@
     </figure>
     <div class="flex-row">
         <p>
-            In this work, we present a method invisible to the human eye that hides objects and deceives autonomous vehicles’ obstacle detectors by exploiting inherent automatic transformation and filtering processes of LiDAR sensor data integrated with autonomous driving frameworks. We call such attacks Physical Removal Attacks (PRA). We achieve 45 degree attack capability. We demonstrate the attack's effectiveness on AV perception models and evaluate its consequences on driving decisions using LGSVL. We finally show that the attack is feasible in a real-world scenario.         </p>
+             We demonstrate the attack's effectiveness against three popular AV obstacle detectors (Apollo, Autoware, PointPillars), and  three fusion models (Frustum-ConvNet, AVOD, and Integrated-Semantic Level Fusion), reaching an attacker capability of 45 degree horizontal angle.
+			 In our moving vehicle scenarios, we achieve a 92.7% success rate removing 90% of a target obstacle’s cloud points. Finally, we propose two enhanced defense to mitigate the treath.  </p>
     </div>
     <p class="my-4">To appear in <a href="https://www.usenix.org/conference/usenixsecurity23">USENIX Security Symposium 2023<br><br></a></p>
 				
@@ -450,31 +446,52 @@
     </section>
 
     <section id="novelties"/>
-    <h2>Physical Removal Attack Overview</h2>
+    <h2>Physical Removal Attacks Principles</h2>
     <hr>
     <div class="flex-row">
         <p>
-            <br>The Physical Removal Attack consists of injecting invisible echoes in close proximity (namely, below a certain distance threshold) in the LiDAR sensor to force the automatic discard of legitimate cloud points in the scene, such as the cloud points produced by genuine obstacles. The genuine cloud point removal is achieved by spoofing cloud points in a specific range between the LiDAR sensor enclosure and the object. 
+            <br>Our Physical Removal Attacks consist of injecting invisible laser signals in close proximity to the LiDAR sensor enclosure (namely, below the LiDAR operational threshold) to force the automatic discard of legitimate cloud points in the scene, such as the cloud points produced by genuine obstacles far away. The attack exploits a cascade effect in spinning LiDAR sensors integrated into AD frameworks, that rely on two main factors tied to the sensor functioning: 
+1) the intrinsic prioritization of the LiDAR sensors over strong reflections, and 2) the automatic filtering of the cloud points within a certain distance of the LiDAR sensor enclosure.
         </p>
     </div>
-    <figure style="width: 100%">
-        <center><img width="45%" src="img/attack_overview.png"></center>
-        <!-- <p class="caption" style="margin-bottom: 24px;">
-            The first column shows adversarial examples produced by attacking attribute classifiers using
-            PGD &#120001<sub>&#8734</sub> (&#949=16/255). Our method purifies the adversarial examples by first diffusing 
-            them up to the timestep t=0.3, following the forward diffusion process, and then, it removes perturbations 
-            using the reverse generative SDE. The middle three columns show the intermediate results of solving the 
-            reverse SDE in DiffPure at different timesteps. We observe that the purified images at t=0 match the clean images (last column).
-        </p> -->
+	
+	<div class="col-2 text-center"> <figure style="width: 100%">
+        <center><img width="90%" src="img/attack_overview.png"></center>
+		<div class="overlayText">
+                <br>
+                <p id="topText"><font size="-1">Overview of our Physical Removal Attack. The
+spoofer photodiode receives the laser pulses from the LiDAR
+and sends back fake echoes below the LiDAR Minimum
+Operational Threshold (MOT).</font></p>
+            </div>
+       
     </figure>
+    </div>
+        <div class="col-2 text-center">
+            <div style="width: 55%; box-sizing: border-box; padding: 10px; margin: auto; padding-left: 5%;">
+        <img width="90%" src="img/multimode_gif.gif">
+    </div>
+            <div class="overlayText">
+                <br>
+                <p id="topText"><font size="-1">Real world PRA with a LiDAR Velodyne VLP-16 in dual-mode setting: (1) no attack, (2) spoofed points (in red) between the genuine obstacle (a traffic cone) and the LiDAR, and (3) spoofed points below the LiDAR MOT. The PCAP files for Last Mode and Dual Mode are available as a reference <strong><a href="https://drive.google.com/drive/folders/1PhsFpy3APUksS0xHaommc1mo8S_x12uB">here</a></strong>.</font></p>
+            </div>
+        </div>
+        <br>
+		<br>
+	
+	
+	
     </section>
 
     <section id="outdoor"/>
-    <h2>Outdoor Attack Experiments</h2>
+	
+		<br>
+    <h2>Removing the point cloud of a pedestrian</h2>
     <hr>
     <div class="flex-row">
         <p>
             <br>
+<<<<<<< Updated upstream
             In this experiment, we evaluate the Physical Removal Attack considering the following scenario: a pedestrian walking across in front of a stopped autonomous vehicle. The spoofer deployed 8m away from the LiDAR on the side of the road aiming to remove the walking pedestrian 4m in front of the LiDAR with the attack angle of 8 degrees. The LiDAR is placed on top of a vehicle to simulate the autonomous vehicle setup. The experiment settings are more thoroughly indicated below: <br>
             &emsp;• Captured Traces Evaluation Platform <strong><a href="https://github.com/autowarefoundation">Autoware</a></strong> <br>
             &emsp;• LiDAR <strong><a href="https://velodynelidar.com/products/puck/">VLP-16</a></strong> <br>
@@ -482,27 +499,33 @@
             &emsp;&emsp;○ Spoofer is located 8m away from the AD vehicle<br>
             &emsp;&emsp;○ Attack angle of 8 degrees<br>
             &emsp;&emsp;○ Pedestrian walks forward and backward 4m in front of the AD vehicle equipped with the LiDAR<br>
+=======
+            In this experiment, we evaluate our removal attack considering the following scenario: a pedestrian walking across in front of a stopped autonomous vehicle. The spoofer deployed 8 m away from the LiDAR on the side of the road aiming to remove the walking pedestrian in front of the vehicle with an horizontal attack angle of 8 degrees. The LiDAR is placed on top of the vehicle as in AV setting. <br>
+            &emsp;• AD Framework: <strong><a href="https://github.com/autowarefoundation/autoware">Autoware.AI</a></strong> <br>
+            &emsp;• LiDAR model: <strong><a href="https://velodynelidar.com/products/puck/">VLP-16</a></strong> <br>
+			&emsp;• Point Cloud visualizer: Veloview <br>
+>>>>>>> Stashed changes
             &emsp;• Vehicle Information<br>
             &emsp;&emsp;○ Vehicle model: <strong><a href="https://www.jeep.com/cherokee.html">Jeep Cherokee 2018</a></strong><br>
-            &emsp;&emsp;○ AD vehicle is stationary (parking lot)<br>
-            The following demo videos demonstrate the camera and LiDAR view of the experiment. The LiDAR point cloud renderings include the pedestrian walking.
+            &emsp;&emsp;○ Stationary vehicle (parking lot)<br>
+            The following demo videos show the camera view and LiDAR point cloud. 
         </p>
         <div class="col-3 text-center"><video  width="300" height="200" controls="controls"/>
             <source src="vid/OutdoorCam.mp4" type="video/mp4"></video>
             <div class="overlayText">
-                <p id="topText"><br><font size="-1">Camera view of the experiment with pedestrian walking in front of the victim vehicle. Spoofer located on the side of the road.</font></p>
+                <p id="topText"><br><font size="-1">Camera view of the scenario with pedestrian walking in front of the victim vehicle. </font></p>
             </div>
         </div>
             <div class="col-3 text-center"><video  width="300" height="200" controls="controls"/>
                 <source src="vid/OutdoorLidarForward.mp4" type="video/mp4"></video>
                 <div class="overlayText">
-                    <p id="bottom"><br><font size="-1">Point cloud of the pedestrian walking in front of the victim vehicle.</p></font>
+                    <p id="bottom"><br><font size="-1">LiDAR point cloud of the pedestrian walking in front of the victim vehicle.</p></font>
                 </div>
             </div>
         <div class="flex-row">
             <br>
             <br>
-            The image below shows how the obstacle point cloud is removed as a pedestrian walks through the attack region. The 3D point cloud (Left) with (bottom) and without (top) the attack. The point cloud in the figures on the left is rendered from a different point of view from the videos. (Right) The decimation of the genuine cloud points during the attack. When the pedestrian walks in the attack region (10 seconds) and leave (27 seconds) (red area) the pedestrian object cloud points detected by the sensor and related cluster generated by Autoware are reduced to zero.
+            The image below shows how the obstacle point cloud is removed as a pedestrian walks through the attack region. The 3D point cloud (Left) with (bottom) and without (top) the attack. (Right) The decimation of the genuine cloud points during the attack. When the pedestrian walks in the attack region (10 seconds) and leave (27 seconds) (red area) the pedestrian object cloud points detected by the sensor and related cluster generated by Autoware are reduced to zero.
             <figure style="width: 100%">
             <center><img style="padding-top: 2%" width="45%" src="img/movingPedDayAndNight.png"></center>
         </figure>
@@ -512,12 +535,9 @@
 
         <!-- <div class="flex-row"> -->
             <!-- <div style="width: 50%; box-sizing: border-box; padding: 10px; margin: auto;"> -->
-                <!-- <img class="screenshot" src="img/movingPedDayAndNight.png"> -->
+                
             <!-- </div> -->
-            <!-- <div style="width: 50%; height: 70% font-size: 20px;"> -->
-                <!-- <p>The 3D point cloud (Left) with (bottom) and without (top) the attack. The point cloud in the figures on the left is rendered from a different point of view from the videos. (Right) The decimation of the genuine cloud points during the attack. When the pedestrian walks in the attack region (10 seconds) and leave (27 seconds) (red area) the pedestrian object cloud points detected by the sensor and related cluster generated by Autoware are reduced to zero.</p> -->
-                               <!-- <p><i>* Work done during an internship at NVIDIA.</i></p> -->
-                <!-- <div><span class="material-icons"> description </span><a href="https://arxiv.org/abs/2205.07460"> arXiv version</a></div> -->
+     
 <!--  -->
         <!-- </div> -->
         <!-- </div> -->
@@ -527,32 +547,29 @@
 </section>
 
 <section id="moving"/>
-<h2>Moving target experiment</h2>
+<br>
+<h2>Attacking a moving vehicle</h2>
 <hr>
 <div class="flex-row">
     <p>
         <br>
-        We conduct proof-of-concept Physical Removal Attacks on moving targets with the LiDAR placed on top of a robot and a vehicle. Though attacking moving targets introduces additional technical challenges, we demonstrate the feasibility of attacking a moving target with a tracking system.
+        We conduct proof-of-concept PRA on moving vehicles with the LiDAR placed on top of a robot and a car. Though attacking moving vehicles introduces additional technical challenges, we demonstrate the feasibility of the attack by building a basic tracking system to track the LiDAR movements.
     </p>
 </div>
 <h3 class="card-subhead">Moving Robot Scenario</h3>
 <div class="flex-row">
     <p>
-        This scenario demonstrates the Physical Removal Attack on a moving autonomous vehicle. In this demonstration, the LiDAR is on top of a robot programmed to move toward a pedestrian, which is initially located 5m away from the robot, and back to its starting point. The spoofer is 5m in front of the LiDAR as well, but it is shifted to one side to simulate the roadside attacker. The video below shows the LiDAR point cloud visualization on the right side and the camera recording of the attack on the left side. The point cloud traces of the experiment are available <strong><a href="https://drive.google.com/drive/folders/1m0ISzicfTrpIBhu1HgmdJcXVKI3aN7tZ">here</a></strong> (PCAP format). The experiment settings are more thoroughly indicated below:<br>
-        &emsp;• LiDAR <strong><a href="https://velodynelidar.com/products/puck/">VLP-16</a></strong><br>
-        &emsp;• Scenario<br>
-        &emsp;&emsp;○ Spoofer is deployed 5m away from the robot<br>
-        &emsp;&emsp;○ Pedestrian is initially 5m away from the LiDAR equipped robot<br>
+        In this demonstration, the LiDAR is located on top of a robot programmed to move toward a pedestrian, which is initially located 5m away from the robot, and back to its starting point. The spoofer is 5 m in front of the LiDAR as well, but it is shifted to one side to simulate the roadside attacker. The video below shows the LiDAR point cloud visualization on the right side and the camera recording of the attack on the left side. The point cloud traces of the experiment are available <strong><a href="https://drive.google.com/drive/folders/1m0ISzicfTrpIBhu1HgmdJcXVKI3aN7tZ">here</a></strong> (PCAP format). <br>
+        &emsp;• LiDAR model: <strong><a href="https://velodynelidar.com/products/puck/">VLP-16</a></strong><br>
         &emsp;• Vehicle Information<br>
         &emsp;&emsp;○ Robot model: <strong><a href="https://neatorobotics.com/">Neato Botvac D85 Robot</a></strong><br>
-        &emsp;&emsp;○ AD vehicle is moving 0.8m forward and 0.8m backward at full speed of 0.1 m/s<br>
-        &emsp;&emsp;○ Positioned inside a room<br>
+        &emsp;&emsp;○ The robot is moving 0.8 m forward and 0.8 m backward at full speed of 0.1 m/s<br>
     </p>
     <div class="col-2 text-center"><video  width="80%" height="80%" controls="controls"/>
         <source src="vid/moving.mp4" type="video/mp4"></video>
         <div class="overlayText">
             <br>
-            <p id="topText"><font size="-1">Camera view and Lidar Point Cloud during the Physical Removal Attack.</font></p>
+            <p id="topText"><font size="-1">Camera view (left) and Lidar point cloud (right) during the removal attack.</font></p>
         </div>
     </div>
         <div class="col-2 text-center">
@@ -561,21 +578,26 @@
             </figure>
             <div class="overlayText">
                 <br>
-                <p id="topText"><font size="-1">Removal percentage of the pedestrian over time for the Physical Removal Attack on the robot.</font></p>
+                <p id="topText"><font size="-1">Number of removed point (percentage) of the pedestrian target obstacle over time and distance from the LiDAR. The attack is conducted in two phases, first the robot moving towards the pedestrian, then moving away.</font></p>
             </div>
         </div>
         <br>
-        <center>
-            <p>
-                <br>
-                The video above (right) shows the LiDAR point cloud visualization and the camera recording of the attack on the robot. The image (left) shows the removal percentage of the pedestrian over time for the Physical Removal Attack on the robot. The attack is conducted in two phases: (1) target moving towards the pedestrian; (2) target moving away from the pedestrian. 
-            </p>
-        </center>
+	
+		<div class="flex-row">
+		
+    <p>
+	<br>
+	<br>
+        The experiment results shows a 95.9% success rate removing 90% of the target pedestrian cloud points, and 85.4% to completely remove all the cloud points. 
+		<br>
+    </p>
+       
 </div>
-<h3 class="card-subhead">Moving Vehicle Scenario</h3>
+<h3 class="card-subhead">Moving Car Scenario</h3>
 <div class="flex-row">
     <p>
-        This experiment aims to demonstrate the feasibility of attacking the AV in the real world with the proposed tracking system, where we drive a vehicle towards the obstacle from 5 m to 3 m ahead. We use a traffic cone as the target obstacle for safety concerns. The vehicle used in this demonstration moves at a speed of 5km/h with the cone obstacle distance ranging from 5-3m. The spoofer was positioned on the side of the car trajectory, behind the obstacle location. <br>
+	<br>
+        This experiment aims to demonstrate the feasibility of attacking a moving AV. We drove a car towards the target obstacle to remove (a traffic cone). The car moves at a speed of 5 km/h with the cone obstacle distance ranging from 5 to 3 m away from the LiDAR sensor. The spoofer was positioned on the side of the car trajectory, behind the obstacle location. <br>
     </p>
     <div class="col-2 text-center"><video  width="100%" height="100%" controls="controls"/>
         <source src="vid/sbs4.mp4" type="video/mp4"></video>
@@ -589,48 +611,52 @@
     <center>
         <p>
             <br>
-            <font size="-1">The above video (left) shows the tracking systems camera view and the corresponding point cloud generated due to the attack. The image (right) on the other hand shows the vehicle setup and the target cone obstacle along with how the obstacle point cloud looks like with and without the attack.</font>
+            <font size="-1">The above video (left) shows the tracking systems camera view and the corresponding point cloud generated during the attack. The images (right) show the top-view location of the car and obstacle before and after the attack start.</font>
         </p>
     </center>
     <div class="flex-row">
         <p>
             <br>
-            Though it is more challenging to attack a moving target with a higher and less stable speed in the outdoor environment, we demonstrate that PRA achieves a similar success rate of 92.7% for removing over 90% of the target traffic cone. The point cloud traces of the experiment are available <strong><a href="https://drive.google.com/drive/folders/1Ley4bibcQc7qGRh-99_keltMMCN4u_Ai">here</a></strong> (PCAP format).
+            Though it is more challenging to attack a moving car with variable speed, we demonstrate that PRA achieves 92.7% success rate for removing over 90% of the target traffic cone (83.6% success rate for removing all the cloud points). The point cloud traces of the experiment are available <strong><a href="https://drive.google.com/drive/folders/1Ley4bibcQc7qGRh-99_keltMMCN4u_Ai">here</a></strong> (PCAP format).
         </p>
     </div>
 
 <section id="simulation"/>
-<h2>LGSVL Simulation</h2>
+<h2>End-to-End attack simulations</h2>
 <hr>
 <div class="flex-row">
     <p>
         <br>
-        To demonstrate the consequences of the attack in AD settings, we select a state-of-the-art AD system simulator (Baidu Apollo) and conducted the Physical Removal Attack. To simulate the PRA, we modify the rendered LiDAR sensor data in a commercial level simulator LGSVL. Since the simulator’s API only allowed for 5-degree increments in the LiDAR data rendering. We observe AD vehicle behavior with attack angles of 5 and 10 degrees. To further reflect the distance constraints demonstrated in the physical experiments, we start the attack when the AV's distance to the obstacle is 10m, 20m, 30m, 40m, and 50m. In the simulation, we evaluate the attack with vehicles and pedestrians obstacles placed at 5 different positions on the road, which resulted in 100 different scenarios. The AV accelerates from a stationary position with a speed limit of 32.4 km/h. The simulation settings are more thoroughly indicated below:<br>
-        &emsp;• AD System <strong><a href="https://github.com/ApolloAuto/apollo/tree/v5.0.0">Apollo Baidu 5.0</a></strong><br>
-        &emsp;• Apollo Planning <strong><a href="https://github.com/lgsvl/apollo-5.0/blob/105f7fd19220dc4c04be1e075b1a5d932eaa2f3f/modules/planning/conf/planning.conf#L4">Configuration</a></strong>.<br>
+        To demonstrate the consequences of the attack in AD settings, we perfomed our end-to-end evaluation on the LGSVL simulator, an open-source production-grade simulator designed for testing and development of AD frameworks.
+To simulate PRA, we synthesize the sensor input changes corresponding to our attack on the input of the perception module in Baidu Apollo and direct the resulting output to the simulator to evaluate the AV control decisions in real-time. 
+For each scenario, we consider the victim's AV moving at constant acceleration from 0 to 32 km/h on a single-lane road. 
+The AV approaches two types of static obstacles (a car and a pedestrian) located in different positions along a crosswalk (e.g., along the AV's trajectory). We start simulating the attack when the AV's distance to the obstacle is 10, 20, 30, 40 and 50 meters, respectively.
+<br>
+        &emsp;• AD Framework: <strong><a href="https://github.com/ApolloAuto/apollo/tree/v5.0.0">Baidu Apollo 5.0</a></strong><br>
+        &emsp;• Baidu Apollo <strong><a href="https://github.com/lgsvl/apollo-5.0/blob/105f7fd19220dc4c04be1e075b1a5d932eaa2f3f/modules/planning/conf/planning.conf#L4">Planning Configuration</a></strong>.<br>
         &emsp;• Simulator Platform <strong><a href="https://www.svlsimulator.com/">LGSVL</a></strong><br>
         &emsp;• Simulation Scenarios<br>
         &emsp;&emsp;○ 2 attack angles - 5 and 10 degrees<br>
-        &emsp;&emsp;○ 2 obstacles - pedestrian and vehicle<br>
+        &emsp;&emsp;○ 2 target obstacles - pedestrian and vehicle<br>
         &emsp;&emsp;○ 5 different obstacle positions<br>
-        &emsp;&emsp;○ 5 different victim vehicle distances when attack starts - 10m, 20m, 30m, 40m, and 50m<br>
+        &emsp;&emsp;○ 5 different victim vehicle distances when attack starts - 10 m, 20 m, 30 m, 40 m, and 50 m<br>
         &emsp;&emsp;○ Map <strong><a href="https://content.lgsvlsimulator.com/maps/singlelaneroad/">Single Lane Road</a></strong><br>
         &emsp;• AV information<br>
         &emsp;&emsp;○ AV model: <strong><a href="https://content.lgsvlsimulator.com/vehicles/lincolnmkz2017/">Lincoln MKZ 2017</a></strong><br>
-        &emsp;&emsp;○ AD vehicle starts at 55m from the obstacle ( at 1m left to the center of the road)<br>
+        &emsp;&emsp;○ AV starts at 55 m from the obstacle (at 1 m left to the center of the road)<br>
         <br>
-        The video recordings of <strong><a href="https://drive.google.com/drive/folders/1_PHGIi6qSFbSpJJLO5wbFir59lHX5xjt">all the simulation scenarios</a></strong> are provided for additional reference. All the simulations start with the AV at 55m away from the target obstacle (namely, a pedestrian or another car). The following demo videos below show the simulations when there is no attack and when the attack starts at 30m from the obstacle positioned in the middle of the road with both 5 and 10 degrees attack angles.
+        The video recordings of <strong><a href="https://drive.google.com/drive/folders/1_PHGIi6qSFbSpJJLO5wbFir59lHX5xjt">all the simulation scenarios</a></strong> are provided for additional reference. All the simulations start with the AV at 55 m away from the target obstacle. As an example, the following videos below show the simulations when the attack starts at 30 m from the obstacle positioned in the middle of the road with 5 degrees attack angle.
 
         <div class="col-3 text-center"><video  width="100%" height="100%" controls="controls"/>
             <source src="vid/30mPed5d.mp4" type="video/mp4"></video>
             <div class="overlayText">
-                <p id="topText"><br><font size="-1">Removal attack starting at 30m away from the pedestrian obstacle.</font></p>
+                <p id="topText"><br><font size="-1">PRA starting at 30 m away from the pedestrian obstacle.</font></p>
             </div>
         </div>
             <div class="col-3 text-center"><video  width="100%" height="100%" controls="controls"/>
                 <source src="vid/30mVeh5d.mp4" type="video/mp4"></video>
                 <div class="overlayText">
-                    <p id="topText"><br><font size="-1">Removal attack starting at 30m away from the vehicle obstacle.</font></p>
+                    <p id="topText"><br><font size="-1">PRA starting at 30 m away from the vehicle obstacle.</font></p>
                 </div>
             </div>
     </p>
@@ -640,14 +666,16 @@
 <div class="flex-row">
     <p>
         <br>
-        The above vedios demonstrate the attack simulation for pedestrian (left) and vehicle (rigth) obstacles at a 5° attack angle. The target pedestrian appears out of the attack region at 8m from the AV but the AV collide with the pedestrian at 26 km/h as it is not able to slow down. The target car appears out of the attack region at 17m from the AV and the AV collide with the vehicle at 16 km/h.
+		The simulation show that our removal attack, can lead to severe consequences and endanger the victim AV. Though the obstacle might be perceived again after the attack begins, we observe that the AV can still collide with the obstacle.
+        In the example above, the target pedestrian appears out of the attack region at 8 m from the AV, however, the AV collide with the pedestrian at 26 km/h as it is not able to timely stop. The target car appears out of the attack region at 17 m from the AV however, the AV collide with the vehicle at 16 km/h.
     </p>
 </div>
 <br>
-<h3 class="card-subhead">Simulation results and observations</h3>
+<h3 class="card-subhead">Speed variation</h3>
 <div class="flex-row">
     <p>
-        We observe the change in trajectories of the AV at different attack start conditions, each corresponding to the percentage of time the obstacle is inside the attack region for its total trajectory time. Figures (b,) (c), (e), and (f) demonstrates that the proposed PRA attack can lead to severe consequences and endanger the victim AV (e.g., by colliding with obstacles on the road). Figures (a) and (d) show that, by starting the attack at different distances, the attacker can remove the target obstacles for different periods (based on the size of the obstacles and the attack angles). In Figures (b), (c), (e), and (f), we show that, though the obstacle is only removed in a limited amount of time, it will cause the AV to accelerate and collide with the obstacles. Without the attack, the victim AV is expected to accelerate to reach the maximum speed (32 km/h) at 46 meters, then uniformly decelerate and stop before reaching the obstacle. When the attack starts and the target obstacle is removed, the victim AV will accelerate to reach the maximum speed. The graphs also represent the expected AV stopping position in the no-attack scenario and the position of the obstacle (marked as AV collision).<br>
+	Without the attack, the victim AV is expected to accelerate to reach the preset speed (32 km/h) at 46 meters, then uniformly decelerate and stop before reaching the obstacle.
+        In the graphs below we observe the AV's speed change at different attack start conditions for 5 and 10-degree attack angles respectively. Figures (a) and (d) show that, by starting the attack at varying distances from the target obstacle, the attacker can remove the target obstacles for different time periods (based on the size of the obstacles and the attack angles). Figures (b), (c), (e), and (f), show that, though the obstacle is only removed in a limited amount of time, it will cause the AV to accelerate and collide with the obstacles. This is because when the attack starts and the target obstacle is removed, the victim AV will accelerate to reach the preset speed. The graphs also represent the expected AV stopping position in the scenario with no attack, and the position of the obstacle (marked as AV collision).<br>
         <br>
     </p>
     <div class="col-3 text-center"><img width="90%" height = "85%" src="img/TimeinAttack5d.png">
@@ -684,22 +712,26 @@
 </section>
 
 <section id="fusion"/>
-<h2>Fusion Model Evaluation</h2>
+<h2>Impact on AV fusion models</h2>
 <hr>
 <div class="flex-row">
     <p>
         <br>
+<<<<<<< Updated upstream
         Several AD systems rely on camera-LiDAR-based fusion models for object detection, object localization, and tracking. Fusion helps compensate for the limitations of individual sensors and provides additional robustness to naive black-box attacks. We demonstrate that the Physical Removal Attack is robust against three state-of-the-art camera-LiDAR fusion models:<br> 
+=======
+        Several AD framework rely on camera-LiDAR-based fusion models for object detection, object localization, and tracking. We demonstrate that PRA are robust against three state-of-the-art camera-LiDAR fusion models:<br> 
+>>>>>>> Stashed changes
         &emsp;&emsp;1) <strong>Frustum-ConvNet (FC)</strong>: This Cascaded Semantic Level Fusion model takes the region proposals from the camera image and creates frustum level feature vectors from the LiDAR points. The model spatially fuses these frustum fea- tures to estimate an oriented 3D bounding box.<br>
         &emsp;&emsp;2) <strong>AVOD</strong>: This Feature Level Fusion extracts individual feature maps from the raw camera and LiDAR data and combines them.<br>
-        &emsp;&emsp;3) <strong>Autoware Integrated-Semantic Level Fusion</strong>: This model fuses the feature outputs from independent detection stacks of camera and LiDAR sensors by back-projecting the detected object from the LiDAR onto the image space. Then it evaluates if there is at least a 50% overlap between the two detections to confirm an obstacle.<br>
-        &emsp;We use the detection rate as a metric to evaluate PRA on the three fusion models for each possible attack angle. Our evaluation considers two analyses. In the first analysis (DEF), the intersection-over-union (IOU) evaluation is performed on the default thresholds for each model (0.7 for cars and 0.5 for pedestrians in the case of AVOD and Frustum-ConvNet, and a 50% overlap in Autoware Integrated-Semantic Level Fusion). In the second analysis (AVE), the evaluation is performed for all the possible IOU threshold values over 3D bounding box predictions for each fusion model (0.1 - 0.9 for Frustum-ConvNet and AVOD, 10% to 90% for Autoware). The resulting detection drop rates for increasing attack angle are shown below.
+        &emsp;&emsp;3) <strong>Autoware Integrated-Semantic Level Fusion</strong>: This model fuses the feature outputs from independent detection stacks of camera and LiDAR sensors by back-projecting the detected object from the LiDAR onto the image space. Then it evaluates if there is at least a 50% overlap between the two detections to confirm an obstacle.<br><br>
+        We use the detection rate as a metric to evaluate PRA. Our evaluation considers two analyses. In the first analysis (DEF), the intersection-over-union (IoU) evaluation is performed on the default thresholds for each model (0.7 for cars and 0.5 for pedestrians in the case of AVOD and Frustum-ConvNet, and a 50% overlap in Autoware Integrated-Semantic Level Fusion). In the second analysis (AVE), the evaluation is performed for all the possible IoU threshold values over 3D bounding box predictions for each fusion model (0.1 - 0.9 for Frustum-ConvNet and AVOD, 10% to 90% for Autoware). The resulting detection drop rates for increasing attack angle are shown below.
     </p>
 </div>
 <div class="col-2">
 <div style="width: 90%">
     <p>
-        <center><strong><font size="-1">Vehicle detection rates on fusion models at increasing attack angles.</font></strong></center>
+        <center><strong><font size="-1">Vehicle detection rates at increasing attack angles.</font></strong></center>
     </p>
     <table class="col-2 table table-condensed">
         <thead>
@@ -959,7 +991,7 @@
 <div class="col-2">
     <div style="width: 90%">
         <p>
-            <center><strong><font size="-1">Pedestrian detection rates on fusion models at increasing attack angles.</font></strong></center>
+            <center><strong><font size="-1">Pedestrian detection rates at increasing attack angles.</font></strong></center>
         </p>
         <table class="col-2 table table-condensed">
             <thead>
@@ -1067,24 +1099,7 @@
 </section>
 
 
-<section id="multimode"/>
-<h2>Multimode Analysis</h2>
-<hr>
 
-
-<div class="flex-row">
-    <div style="width: 40%; box-sizing: border-box; padding: 10px; margin: auto; padding-left: 5%;">
-        <img width="90%" src="img/multimode_gif.gif">
-    </div>
-    <div style="width: 60%; font-size: 20px;">
-        <br>
-        <p>For the LiDAR Velodyne VLP-16, there are three different modes: strongest mode, dual mode, and last mode where different echoes are used for calculating the point cloud (e.g. strongest mode uses the echo with maximum intensity; last-mode uses the last returned echo while the dual-mode calculates both). We found that PRA can remove points for all three modes. Here below we show the attack's ability to completely remove target obstacles from the LiDAR perception. The PCAP files for Last Mode and Dual Mode are available as a reference <strong><a href="https://drive.google.com/drive/folders/1PhsFpy3APUksS0xHaommc1mo8S_x12uB">here</a></strong>.<br>
-        &emsp;The figure shows the point cloud of the traffic cone obstacle removed by our removal attack (LiDAR Dual Mode enable). First, the attacker spoof the points between the real obstacle and the LiDAR. Then the injected points are moved below the MOT (Minimum Operational Threshold). When the points are spoofed with higher intensity the genuine point clouds from the obstacle are removed. 
-    
-        <!--                <p><i>* Work done during an internship at NVIDIA.</i></p>-->
-        <!-- <div><span class="material-icons"> description </span><a href="https://arxiv.org/abs/2205.07460"> arXiv version</a></div> -->
-
-</div>
     
 </div>
 </section>
@@ -1092,17 +1107,17 @@
     <!-- <section id="bibtex"> -->
         <!-- <h2>Citation</h2> -->
         <!-- <hr> -->
-        <!-- <pre><code>inproceedings{cao2022advdo, -->
+        <!-- <pre><code>inproceedings{xx, -->
 <!--  -->
-          <!-- title={AdvDO: Realistic Adversarial Attacks for Trajectory Prediction}, -->
+          <!-- title={xx}, -->
         <!--  -->
-          <!-- author={Yulong Cao, Chaowei Xiao, Anima Anankuda, Danfei Xu and Marco Pavone}, -->
+          <!-- author={xxx}, -->
         <!--  -->
-          <!-- booktitle={European conference on computer vision (ECCV)}, -->
+          <!-- booktitle={xx}, -->
         <!--  -->
           <!-- year={2022}, -->
         <!--  -->
-          <!-- organization={Springer} -->
+          <!-- organization={xxx} -->
         <!--  -->
         <!-- } -->
 <!-- }</code></pre> -->
@@ -1115,7 +1130,7 @@
 <br>
 <div class="flex-row">
     <p>
-        This research was funded by the JSPS KAKENHI Grant Number 22H00519, NSF under the National AI Institute for Edge Computing Leveraging Next Generation Wireless Networks, Grant Number 2112562, as well as NSF grant CNS-1930041, CMMI-2038215, and a gift from Facebook. We thank the anonymous reviewers for the insightful comments, and Jennifer Sheldon for the help in proofreading. 
+        This research was funded by the JSPS KAKENHI Grant Number 22H00519, NSF under the National AI Institute for Edge Computing Leveraging Next Generation Wireless Networks, Grant Number 2112562, as well as NSF grant CNS-1930041, CMMI-2038215, and a gift from Facebook and Toyota. We thank the anonymous reviewers for the insightful comments, and Jennifer Sheldon for the help in proofreading. 
     </p>
 </div>
 </body>

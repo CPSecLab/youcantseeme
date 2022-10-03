@@ -491,20 +491,10 @@ Operational Threshold (MOT).</font></p>
     <div class="flex-row">
         <p>
             <br>
-<<<<<<< Updated upstream
-            In this experiment, we evaluate the Physical Removal Attack considering the following scenario: a pedestrian walking across in front of a stopped autonomous vehicle. The spoofer deployed 8m away from the LiDAR on the side of the road aiming to remove the walking pedestrian 4m in front of the LiDAR with the attack angle of 8 degrees. The LiDAR is placed on top of a vehicle to simulate the autonomous vehicle setup. The experiment settings are more thoroughly indicated below: <br>
-            &emsp;• Captured Traces Evaluation Platform <strong><a href="https://github.com/autowarefoundation">Autoware</a></strong> <br>
-            &emsp;• LiDAR <strong><a href="https://velodynelidar.com/products/puck/">VLP-16</a></strong> <br>
-            &emsp;• Scenario<br>
-            &emsp;&emsp;○ Spoofer is located 8m away from the AD vehicle<br>
-            &emsp;&emsp;○ Attack angle of 8 degrees<br>
-            &emsp;&emsp;○ Pedestrian walks forward and backward 4m in front of the AD vehicle equipped with the LiDAR<br>
-=======
             In this experiment, we evaluate our removal attack considering the following scenario: a pedestrian walking across in front of a stopped autonomous vehicle. The spoofer deployed 8 m away from the LiDAR on the side of the road aiming to remove the walking pedestrian in front of the vehicle with an horizontal attack angle of 8 degrees. The LiDAR is placed on top of the vehicle as in AV setting. <br>
             &emsp;• AD Framework: <strong><a href="https://github.com/autowarefoundation/autoware">Autoware.AI</a></strong> <br>
             &emsp;• LiDAR model: <strong><a href="https://velodynelidar.com/products/puck/">VLP-16</a></strong> <br>
 			&emsp;• Point Cloud visualizer: Veloview <br>
->>>>>>> Stashed changes
             &emsp;• Vehicle Information<br>
             &emsp;&emsp;○ Vehicle model: <strong><a href="https://www.jeep.com/cherokee.html">Jeep Cherokee 2018</a></strong><br>
             &emsp;&emsp;○ Stationary vehicle (parking lot)<br>
@@ -717,11 +707,8 @@ The AV approaches two types of static obstacles (a car and a pedestrian) located
 <div class="flex-row">
     <p>
         <br>
-<<<<<<< Updated upstream
-        Several AD systems rely on camera-LiDAR-based fusion models for object detection, object localization, and tracking. Fusion helps compensate for the limitations of individual sensors and provides additional robustness to naive black-box attacks. We demonstrate that the Physical Removal Attack is robust against three state-of-the-art camera-LiDAR fusion models:<br> 
-=======
         Several AD framework rely on camera-LiDAR-based fusion models for object detection, object localization, and tracking. We demonstrate that PRA are robust against three state-of-the-art camera-LiDAR fusion models:<br> 
->>>>>>> Stashed changes
+
         &emsp;&emsp;1) <strong>Frustum-ConvNet (FC)</strong>: This Cascaded Semantic Level Fusion model takes the region proposals from the camera image and creates frustum level feature vectors from the LiDAR points. The model spatially fuses these frustum fea- tures to estimate an oriented 3D bounding box.<br>
         &emsp;&emsp;2) <strong>AVOD</strong>: This Feature Level Fusion extracts individual feature maps from the raw camera and LiDAR data and combines them.<br>
         &emsp;&emsp;3) <strong>Autoware Integrated-Semantic Level Fusion</strong>: This model fuses the feature outputs from independent detection stacks of camera and LiDAR sensors by back-projecting the detected object from the LiDAR onto the image space. Then it evaluates if there is at least a 50% overlap between the two detections to confirm an obstacle.<br><br>
